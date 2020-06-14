@@ -28,8 +28,8 @@
                 </select>
             </ul>
         </header>
-        <nav>
-            <div class="carrinho" id="carrinho">
+        <nav id='back_carrinho'>
+            <div class="carrinho_vazio">
                 <h3>Carrinho</h3>
                 <div class="logo_carrinho">
                     <img src="assets/cart-icon.svg" alt="">
@@ -38,25 +38,19 @@
                     <p>Até o momento, <br>o seu carrinho está vazio</p>
                 </div>
             </div>
+            <div class="carrinho esconder">
+                <h3 class="h3_h4">Carrinho</h3>
+            </div>
         </nav>
         <main>
             <table id="produtos_jogos">
             </table>
         </main>
     </section>
-
-    <footer>
-    </footer>
-
-
-
-
-
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">         
         var xmlhttp = new XMLHttpRequest();                             //criação da variável para inicialização do JSON
         xmlhttp.onreadystatechange = function() {   
             if (this.readyState == 4 && this.status == 200) {
@@ -71,68 +65,28 @@
                         var th = document.createElement("th")               //variável do elemento TH da tabela dos produtos
                         var div = document.createElement("div")             //variável da div da tabela dos produtos
                         var div_text = document.createElement("div")        //variável da div com o nome e o valor da tabela dos produtos                          
-                        div.setAttribute('class','borda_table')             //atribuição da classe css da div da tabela
-                        div.setAttribute('id',myObj[cont].id)               //atribuição do id do JSON há div das imagens
-                        div_text.setAttribute('id', 'div_text')             //atribuição do id na div com os nomes e os valores
+                        div.setAttribute('class','borda_table')                                                                                      
+                        div_text.setAttribute('id', myObj[cont].id)         //atribuição do id do JSON há div das imagens    
+                        div_text.setAttribute('class', 'div_text')          
                         tr.appendChild(th)                                  
                         th.appendChild(div)
                         th.appendChild(div_text)
+                        th.setAttribute('class', 'th_hover')
 
                         var img = document.createElement("img")                 //criação do elemento img
                         img.setAttribute('src','assets/' + myObj[cont].image)   //get da imagem dentro do JSON
-                        img.setAttribute('class', 'img_md')                     //atribuição de class na tag img
-                        div.appendChild(img)                                    //input da tag img dentro da div da tabela
+                        img.setAttribute('class', 'img_md')                     
+                        div.appendChild(img)                                    
 
                         var p = document.createElement("p")                     //criação da tag p para input dos nomes dos produtos
-                        p.setAttribute('class','txt_game')                      //atribuição da class 
-
+                        p.setAttribute('class','txt_game')                      //atribuição da class   
                         p.textContent = myObj[cont].name                        //get do elemento name no JSON
                         div_text.appendChild(p)                                 //input da tag p na div de textos
 
                         var p_preco = document.createElement("p")               //criação da tag p para input do valor dos produtos
                         p_preco.setAttribute('class', 'txt_game txt_preco product')     //atribuição da class no p
                         p_preco.textContent = 'R$ ' + myObj[cont].price         //get do elemento price no JSON               
-                        div_text.appendChild(p_preco)                           //input da ta p na div dos valores
-                            
-
-                       $(function(){                       //função hover para o botão do carrinho
-                            $("#div_text").hover(
-                                function(){
-                                    $(this).html("<button type='submit' id='enviar'>teste</button>");
-                                    
-                                },
-                                function(){
-                                    //Ao remover o cursor da div
-                                    $(this).css('background', 'white');
-                                } 
-                            )                
-                        });
-
-                        $(document).on("alternador", function(){
-                            var min_max = $(this).val();
-
-                            if(min_max == 'min_value'){
-                                busca_val_min()
-                            }
-                            else if(min_max == 'max_value'){
-                                busca_val_max()
-                            }
-                        })
-
-                        function busca_val_min(){
-                            var products = $('.product')
-                            products.sort(function(a, b){ return $(b).data(myObj[cont].price)-$(b).data(myObj[cont].price)})
-                            $(".products-grid").html(products)
-                        }
-
-                        function busca_val_max(){
-                            var products = $('.product')
-                            products.sort(function(a, b){ return $(b).data(myObj[cont].price)-$(a).data(myObj[cont].price)})
-                            $(".products-grid").html(products)
-                        }
-                        
-                        
-                        
+                        div_text.appendChild(p_preco)                           //input da ta p na div dos valores                       
                         cont++
                     }
                 }
@@ -140,8 +94,63 @@
             }
         };
         
+        
 xmlhttp.open("GET", "http://costin.com.br/challenge-cr/products.json", true);
-xmlhttp.send();
-    </script>
+xmlhttp.send();                                                                            
+                    var retorno = ''                                        //função hover para o botão do carrinho
+                    var conteudo = ''
+                    $(document).on("mouseenter", ".div_text", function() {
+                        retorno = $(this).html();
+                        var funcao = "$(this).parent().attr('id')"
+                        console.log(conteudo)
+                        $(this).html('<button type="submit" id="enviar" onclick="addCarrinho('+ funcao +', ' + "'" + conteudo + "'" + ')" class="botao_carrinho">adicionar ao carrinho</button>'); //criação do botão em HTML
+                    });
+                    $(document).on("mouseleave", ".div_text", function() {
+                        $(this).css('background: red;')                     //Hover INCOMPLETO!
+                    });
+                                        
+                    function addCarrinho(element, content){                 //Função para o input dos produtos no carrinho 
+                        $('.carrinho_vazio').addClass('esconder')
+                        $('.carrinho').removeClass('esconder')
+                        var xmlhttp = new XMLHttpRequest();                             
+                            xmlhttp.onreadystatechange = function() {   
+                                if (this.readyState == 4 && this.status == 200) {
+                                var myObj = JSON.parse(this.responseText);
+                                var filtered = myObj.filter(a=>a.id==element);
+                                var img = filtered[0].image                                               //variável com busca das imagens no JSON
+                                var title = filtered[0].name                                              //variável com busca dos nomes no JSON
+                                var valor = filtered[0].price                                             //varoável com busca dos valores no JSON
+                                content = conteudo + "<h3 class='h3_h4'>Carrinho</h3>"+                   //criação dos elementos HTML no carrinho INCOMPLETO
+                                                    "<div class='background_image'>" +                             
+                                                    "<img src='assets/"+ img +"' class='image_carrinho'>" +
+                                                "</div>" +
+                                                "<div class='titulo_car'>" +
+                                                    "<p class='titulo'>"+ title +"</p>"+
+                                                    "<button class='botao_x'>x</button>"+
+                                                    "<p class='preco'>R$ "+ valor +"</p>"+
+                                                "</div>"
+                                conteudo = content
+                                var detalhes = "<div class='nav div_subtotal'>"+                           //variável das opções de valores
+                                                    "<p class='Subtotal'>subtotal</p>"+
+                                                    "<p class='Subtotal_val'>R$"+ valor +"</p>"+  
+                                                "</div>"+
+                                                "<div class='nav div_frete'>"+
+                                                    "<p class='Subtotal'>frete</p>"+
+                                                    "<p class='Subtotal_val'>R$ 10,00</p>"+  
+                                                "</div>"+
+                                                "<div class='nav div_frete'>"+
+                                                    "<p class='Subtotal'>total</p>"+
+                                                    "<p class='Subtotal_val'>R$" + (valor+10) + "</p>"+  
+                                                "</div>"+
+                                                "<div class='div_botao'>"+
+                                                    "<button class='botao'>finalizar compra</button>"+ 
+                                                "</div>"                
+                                $('.carrinho').html(conteudo + detalhes)
+                                }
+                            }
+                    xmlhttp.open("GET", "http://costin.com.br/challenge-cr/products.json", true);
+                    xmlhttp.send();        
+                    }
+</script>
 </body>
 </html>

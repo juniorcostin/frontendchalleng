@@ -43,10 +43,20 @@ body{
     justify-content: space-between;
 }
 /*Inicio Style Carrinho */
+.carrinho_vazio{
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    height: 550px;
+}
+
+.esconder{
+    display: none;
+}
+
 .carrinho{
     border: 1px solid #e1e1e1;
     border-radius: 4px;
-    height: 400px;
+    height: 550px;
 }
 
 h3{
@@ -70,6 +80,98 @@ h3{
     color: #746A6A;
     opacity: 1;
 }
+
+h4{
+    font-size: 15px;
+    color: #7F7575;
+    padding-left: 140px;
+    margin-top: -30px;
+}
+
+.background_image{
+    background: #EEEEEE;
+    border-radius: 4px;
+    width: 80px;
+    height: 80px;
+    margin-left: 40px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+}
+
+.h3_h4{
+    display: flex;
+    justify-content: space-between;
+}
+
+.image_carrinho{
+    width: 60px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.preco{
+    margin-top: -20px;
+    font-weight: bolder;
+    color: #423B3B;
+    opacity: 1;
+}
+
+.botao_x{
+    margin-top: -30px;
+    position: absolute;
+    margin-left: 200px;
+    width: 27px;
+    border-radius: 55px;
+    color: white;
+    border: #54A3FF;
+    background: #54A3FF 0% 0% no-repeat padding-box;
+}   
+
+.titulo_car{
+    font-size: 17px;
+    color: #7F7575;
+    padding-left: 140px;
+    margin-top: -80px;
+    width: 350px;
+}
+
+.div_subtotal{
+    margin-top: 50px;
+}
+
+.Subtotal{
+    margin-left: 40px;
+    color: #7F7575;
+}
+
+.Subtotal_val{
+    margin-right: 40px;
+    font-weight: bolder;
+    font-size: 18px;
+    color: black;
+}
+
+.div_frete{
+    margin-top: 15px;
+    color: #7F7575;
+}
+
+.div_botao{
+    margin: 10px 10px 10px 10px;
+}
+.botao{
+    background: #54A3FF 0% 0% no-repeat padding-box;
+    border-radius: 3px;
+    opacity: 1;
+    color: white;
+    border: #54A3FF;
+    width: 360px;
+    height: 60px;
+    font-size: 17px;
+    
+}
+
 /*Fim Style Carrinho */
 
 /*Inicio Style Table */ 
@@ -81,20 +183,20 @@ table{
     border-radius: 4px;
     width: 262px;
     height: 230px;
-    margin-bottom: 10px;
     margin-right: 55px;
     margin-top: 30px;
+    margin-bottom: 10px;
 
 }
 
 .txt_game{
+    margin-left: -50px;
     margin-bottom: -5px;
     display: flex;
     justify-content: center;
     font: Regular 16px/22px Open Sans;
     color: #746A6A;
     opacity: 1;
-    padding-right: 50px;
 }
 
 .txt_preco{
@@ -111,11 +213,11 @@ table{
 }
 
 .botao_carrinho{
-    margin-left: 30px;
-    width: 200px;
+    margin-left: 40px;
+    height: 37px;
     border: none;
     background: white;
     color: #3486E6;
-    font-size: 20px;
+    font-size: 18px;    
 }
 /* Fim Style Table */
